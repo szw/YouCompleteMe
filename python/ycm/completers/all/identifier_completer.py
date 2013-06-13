@@ -203,7 +203,7 @@ class IdentifierCompleter( GeneralCompleter ):
     for match in self.identifier_regex.finditer( text ):
       count += 1
       identifier = match.group()
-      position = match.start() + ( len( identifier ) / 2 )
+      position = match.start()
       if identifier in positions:
         positions[ identifier ].append( position )
       else:
