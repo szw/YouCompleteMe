@@ -215,17 +215,17 @@ class IdentifierCompleter( GeneralCompleter ):
     rest = []
 
     for word in completions:
-      if word in positions:
-        distance = min( [ abs( cursor - pos ) for pos in positions[ word ] ] )
-        count_factor = ( len( positions[ word ] ) ) / float( count )
-        distance -= distance * count_factor
-        completions_with_distance.append( ( word, distance ) )
-      else:
-        rest.append( word )
+      if len(word) > 2:
+        if word in positions:
+          distance = min( [ abs( cursor - pos ) for pos in positions[ word ] ] )
+          count_factor = ( len( positions[ word ] ) ) / float( count )
+          distance -= distance * count_factor
+          completions_with_distance.append( ( word, distance ) )
+        else:
+          rest.append( word )
 
-    sorted_completions = sorted( completions_with_distance,
-                                 key=lambda pair: pair[ 1 ] )
-    completions = [ pair[ 0 ] for pair in sorted_completions ] + rest
+    completions_with_distance.sort( key=lambda pair: pair[ 1 ] )
+    completions = [ pair[ 0 ] for pair in completions_with_distance ] + rest
 
     # We will never have duplicates in completions so with 'dup':1 we tell Vim
     # to add this candidate even if it's a duplicate of an existing one (which
