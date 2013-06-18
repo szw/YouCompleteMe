@@ -215,7 +215,7 @@ class IdentifierCompleter( GeneralCompleter ):
     rest = []
 
     for word in completions:
-      if len(word) > 2:
+      if len(word) > MIN_NUM_CHARS:
         if word in positions:
           distance = min( [ abs( cursor - pos ) for pos in positions[ word ] ] )
           count_factor = ( len( positions[ word ] ) ) / float( count )
